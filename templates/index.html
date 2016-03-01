@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+  <title>PHCH - Estimate</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+  <nav class="black lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"></a>
+
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br>
+      <br>
+      <h1 class="header center orange-text"><abbr title="Power Holding Company of Nigeria">PHCN</abbr> Estimate</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">Estimate the number of hours per day your appliances run on <abbr title="Power Holding Company of Nigeria">PHCN</abbr></h5>
+      </div>
+      <br>
+      <br>
+
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="number" min="1" data-bind="value: tariffRate, valueUpdate: 'afterkeydown'" id="tariff" name="tariff" class="validate" placeholder="Tariff Rate" />
+              <label for="tariff"> Tariff
+
+              </label>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <button data-bind='click: addLine, text: lines()[0] ? "Add Another Appliance":"Add Appliance"' class="waves-effect waves-light btn-large light-blue darken-3"></button>
+      </div>
+      <table width='100%'>
+        <thead>
+          <tr>
+            <th width='30%'>Appliance</th>
+            <th width='15%'>Wattage</th>
+            <th width='25%'>Hours Used PerDay</th>
+            <th width='20%'>kwh/day</th>
+            <th width='10%'> </th>
+          </tr>
+        </thead>
+        <tbody data-bind='foreach: {data: lines, afterRender: render}'>
+          <tr>
+            <td>
+              <select data-bind='options: appliances, optionsText: "name", optionsCaption: "Select...", value: appliance'> </select>
+            </td>
+            <td class='price' data-bind='with: appliance'>
+              <span data-bind='text:wattage '> </span>
+            </td>
+            <td class='quantity'>
+              <input data-bind='visible: appliance, value: hoursUsedPerDay, valueUpdate: "afterkeydown"' type="number" min="1" max="24" name="HPD" id="HPD" />
+            </td>
+            <td class='price'>
+              <span data-bind='visible: appliance, text: kWh()'> </span>
+            </td>
+            <td>
+              <a href='#' data-bind='click: $parent.removeLine' class="">Remove</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <p class='grandTotal'>
+          <span data-bind='text: kwhPerDay()'> </span> kWh/day -
+          <span data-bind='text:"&#8358;" + formatCurrency((kwhPerDay() * tariffRate()))'> </span>
+        </p>
+        <p class='grandTotal'>
+          <span data-bind='text: kwhPerMonth() '> </span> kWh/month -
+          <span data-bind='text:"&#8358;" + formatCurrency((kwhPerMonth() * tariffRate()))'> </span>
+        </p>
+        <p class='grandTotal'>
+          <span data-bind='text: kwhPerYear()'> </span> kWh/year -
+          <span data-bind='text:"&#8358;" + formatCurrency((kwhPerYear() * tariffRate()))'> </span>
+        </p>
+      </div>
+
+    </div>
+    <br>
+    <br>
+
+    <div class="section">
+
+    </div>
+  </div>
+
+  <footer class="page-footer black">
+    <div class="footer-copyright">
+      <div class="container">
+        Made by <a class="orange-text text-lighten-3" href="http://www.petermakafan.com.ng">Peter</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <script src="{{ url_for('static', filename='js/init.js') }}">]</script>
+
+</body>
+
+</html>
